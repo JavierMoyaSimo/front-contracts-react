@@ -1,3 +1,13 @@
+// .main-div{
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+
+// .background-class {
+//     background-color: rgb(173, 214, 212);
+// }
+
 .buttons-div {
     display: flex;
     flex-direction: row;
@@ -17,16 +27,19 @@
     margin: 1em;
     border-radius: 0.5em;
     padding: 0.2em;
+    cursor: pointer;
 }
 
 .left-new-contract-button {
     color: rgb(65, 58, 58);
     font-weight: bold;
+    cursor: pointer;
 }
 
 .right-new-contract-button {
     color: rgb(65, 58, 58);
     padding-left: 0.2em;
+    cursor: pointer;
 }
 
 .modify-button {
@@ -38,6 +51,9 @@
     margin: auto;
     // height: 1.5em;
     font-size: small;
+    // cursor: pointer;
+    padding: 0.2em;
+
 }
 
 .left-modify-button {
@@ -45,6 +61,8 @@
     justify-content: center;
     align-items: center;
     // border: 1px solid black;
+    cursor: pointer;
+    align-content: center;
 }
 
 .right-modify-button {
@@ -53,6 +71,8 @@
     align-items: center;
     // border: 1px solid rgb(211, 23, 23);
     font-size: 10px;
+    cursor: pointer;
+    align-content: center;
 }
 
 .delete-button {
@@ -64,4 +84,27 @@
     // height: 1.5em;
     font-size: small;
     margin: auto;
+    // cursor: pointer;
+    padding: 0.2em;
+
+}
+
+.left-delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    // border: 1px solid black;
+    cursor: pointer;
+    align-content: center;
+}
+
+.right-delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // border: 1px solid rgb(211, 23, 23);
+    font-size: 10px;
+    cursor: pointer;
+    align-content: center;
 }

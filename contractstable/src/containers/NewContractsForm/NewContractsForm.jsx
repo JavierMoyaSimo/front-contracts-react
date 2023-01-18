@@ -1,19 +1,18 @@
-
 import React, { useState, useEffect } from "react";
-import './ContractsForm.scss'
+import './NewContractsForm.scss'
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
-import { contractsTableData, cleanContractTable } from "../ContractsTable/contractsTableSlice";
+// import { useSelector, useDispatch } from "react-redux";
+// import { contractsTableData, cleanContractTable } from "../ContractsTable/contractsTableSlice";
 import { bringContractsById } from "../../services/apiCalls";
 import axios from "axios";
 import { errorCheck } from "../../services/errorManage";
 
-const ContractsForm = () => {
 
-    const dispatch = useDispatch();
+
+const NewContractsForm = () => {
+
+
     const navigate = useNavigate();
-    const selectedContract = useSelector(contractsTableData);
-    const contractFromRdx = selectedContract?.details;
 
     //Hook
     const [form, setForm] = useState([]);
@@ -29,24 +28,41 @@ const ContractsForm = () => {
         telefonoError: "",
     });
 
-    useEffect(() => {
 
-
-        if (form.length === 0) {
-
-            bringContractsById(selectedContract?.details._id)
-                .then((contract) => {
-                    console.log(form, "este es el estado de formformform")
-                    setForm(contract);
-                })
-                .catch((error) => console.error(error));
-        }
-    }, []);
+    const dataBase = "http://localhost:3002";
 
     const clickedReturn = () => {
-        dispatch(cleanContractTable({ details: {} }))
+        // dispatch(cleanContractTable({ details: {} }))
 
         navigate("/");
+    };
+
+    const newContract = async () => {
+        try {
+
+            let resultado = await axios.post(dataBase + "/contracts/addcontract/",
+                {
+                    nombre: form.nombre,
+                    apellido1: form.apellido1,
+                    apellido2: form.apellido2,
+                    documento: form.documento,
+                    cp: form.cp,
+                    localidad: form.localidad,
+                    direccion: form.direccion,
+                    telefono: form.telefono
+
+                }
+
+            )
+
+            console.log(resultado, "este es el resultado de newContrat")
+
+            navigate("/");
+
+        } catch (error) {
+            console.error(' FALLOOO')
+        }
+
     };
 
     const errorHandler = (field, value, type) => {
@@ -66,70 +82,8 @@ const ContractsForm = () => {
     };
 
 
-    const dataBase = "http://localhost:3002";
 
-    const modifyContract = async () => {
-        try {
-
-            let resultado = await axios.put(dataBase + "/contracts/modifycontract/" + contractFromRdx?._id,
-                {
-                    nombre: form.nombre,
-                    apellido1: form.apellido1,
-                    apellido2: form.apellido2,
-                    documento: form.documento,
-                    cp: form.cp,
-                    localidad: form.localidad,
-                    direccion: form.direccion,
-                    telefono: form.telefono
-
-                }
-
-            )
-
-            console.log(resultado, "este es el resultado de modificontrat")
-            dispatch(cleanContractTable({ details: {} }))
-
-            navigate("/");
-
-        } catch (error) {
-            console.error(' FALLOOO')
-        }
-
-    };
-
-    // const newContract = async () => {
-    //     try {
-
-    //         let resultado = await axios.put(dataBase + "/contracts/addcontract",
-    //             {
-    //                 nombre: form.nombre,
-    //                 apellido1: form.apellido1,
-    //                 apellido2: form.apellido2,
-    //                 documento: form.documento,
-    //                 cp: form.cp,
-    //                 localidad: form.localidad,
-    //                 direccion: form.direccion,
-    //                 telefono: form.telefono
-
-    //             }
-
-    //         )
-
-    //         console.log(resultado, "este es el resultado de newContrat")
-
-    //         navigate("/");
-
-    //     } catch (error) {
-    //         console.error(' FALLOOO')
-    //     }
-
-    // };
-
-    // if (selectedContract?.details !== undefined) {
     return (
-
-
-
         <div className="registerDesign">
             <div className="formRegisterSquare">
                 <h1 className="registerTittleDesign">FORMULARIO</h1>
@@ -139,7 +93,7 @@ const ContractsForm = () => {
                         name="nombre"
                         className="registerInputs"
                         placeholder="Nombre"
-                        value={form.nombre}
+
                         required
                         onChange={inputHandler}
                         onInput={(e) => errorHandler(e.target.name, e.target.value, "texto")}
@@ -150,7 +104,7 @@ const ContractsForm = () => {
                         name="apellido1"
                         className="registerInputs"
                         placeholder="Apellido1"
-                        value={form.apellido1}
+
                         onChange={inputHandler}
                         onInput={(e) =>
                             errorHandler(e.target.name, e.target.value, "texto")
@@ -162,7 +116,7 @@ const ContractsForm = () => {
                         name="apellido2"
                         className="registerInputs"
                         placeholder="Apellido2"
-                        value={form.apellido2}
+
                         onChange={inputHandler}
                         onInput={(e) =>
                             errorHandler(e.target.name, e.target.value, "texto")
@@ -175,7 +129,7 @@ const ContractsForm = () => {
                         className="registerInputs"
                         placeholder="DNI"
                         required
-                        value={form.documento}
+
                         onChange={inputHandler}
                         onInput={(e) => errorHandler(e.target.name, e.target.value, "documento")}
                     />
@@ -186,7 +140,7 @@ const ContractsForm = () => {
                         className="registerInputs"
                         placeholder="Codigo Postal"
                         required
-                        value={form.cp}
+
                         onChange={inputHandler}
                         onInput={(e) =>
                             errorHandler(e.target.name, e.target.value, "cp")
@@ -197,7 +151,6 @@ const ContractsForm = () => {
                         type="text"
                         name="localidad"
                         readOnly
-                        value={form.localidad}
                         className="registerInputs"
                         onChange={inputHandler}
                     />
@@ -206,7 +159,7 @@ const ContractsForm = () => {
                         name="direccion"
                         className="registerInputs"
                         placeholder="Direccion"
-                        value={form.direccion}
+
                         onChange={inputHandler}
                         onInput={(e) =>
                             errorHandler(e.target.name, e.target.value, "direccion")
@@ -220,7 +173,7 @@ const ContractsForm = () => {
                         className="registerInputs"
                         placeholder="Teléfono"
                         required
-                        value={form.telefono}
+
                         onChange={inputHandler}
                         onInput={(e) =>
                             errorHandler(e.target.name, e.target.value, "telefono")
@@ -230,8 +183,8 @@ const ContractsForm = () => {
 
                     <br></br>
                     <div className="buttoncenter">
-                        <div onClick={() => modifyContract()} className="registerButton">
-                            Modificar!
+                        <div onClick={() => newContract()} className="registerButton">
+                            Registrar
                         </div>
                         <div id="regerror" className="errorInput"></div>
                     </div>
@@ -248,10 +201,7 @@ const ContractsForm = () => {
             </div>
         </div>
     )
-    // } else {
 
-
-    // }
 }
 
 
@@ -260,4 +210,4 @@ const ContractsForm = () => {
 
 
 
-export default ContractsForm;
+export default NewContractsForm;

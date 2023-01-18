@@ -8,7 +8,13 @@ export const contractsTableSlice = createSlice({
         details: {}
     },
     reducers: {
-        addContract: (state, action) => {
+        addContractTable: (state, action) => {
+            return {
+                ...state,
+                ...action.payload
+            }
+        },
+        cleanContractTable: (state, action) => {
             return {
                 ...state,
                 ...action.payload
@@ -17,7 +23,8 @@ export const contractsTableSlice = createSlice({
     }
 });
 
-export const { addContract } = contractsTableSlice.actions;//Este addContract que exportamos es el mismo addContract que contiene los reducers.
+export const { addContractTable, cleanContractTable } = contractsTableSlice.actions;
+//Este addContractTable que exportamos es el mismo addContract que contiene los reducers.
 //Lo llamaremos en el componente container table
 
 
