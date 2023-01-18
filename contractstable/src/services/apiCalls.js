@@ -35,6 +35,20 @@ export const deleteContract = async (id) => {
 //MODIFICAR CONTRATO
 export const modifyContract = async (id, body) => {
     let res = await axios.put(dataBase + "/contracts/modifycontract/" + id, body);
-    return res;
-    //o res.data
+    return res.data;
+    //o res
 }
+
+//LOCALIDADES
+export const bringLocalities = async () => {
+    let res = await axios.get(dataBase + "/localities/getlocalidad");
+
+    return res.data;
+};
+
+//LOCALIDAD POR CP
+export const bringLocalitiesByCp = async (cp) => {
+    let res = await axios.get(dataBase + "/localities/getlocalidad/" + cp);
+
+    return res.data;
+};
