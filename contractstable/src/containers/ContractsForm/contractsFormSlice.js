@@ -13,11 +13,17 @@ export const contractsFormSlice = createSlice({
                 ...state,
                 ...action.payload
             }
+        },
+        cleanContractForm: (state, action) => {
+            return {
+                ...state,
+                ...action.payload
+            }
         }
     }
 });
 
-export const { addContractsForm } = contractsFormSlice.actions;
+export const { addContractsForm, cleanContractForm } = contractsFormSlice.actions;
 
 
 //contractsFormData contiene el estado del reducer, es decir, contractsFormData es lo que van a leer

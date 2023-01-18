@@ -4,7 +4,8 @@ import './ContractsForm.scss'
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { contractsTableData, cleanContractTable } from "../ContractsTable/contractsTableSlice";
-import { bringContractsById } from "../../services/apiCalls";
+import { contractsFormData, addContractsForm, cleanContractForm } from "../ContractsForm/contractsFormSlice";
+import { bringContractsById, bringLocalitiesByCp } from "../../services/apiCalls";
 import axios from "axios";
 import { errorCheck } from "../../services/errorManage";
 
@@ -17,6 +18,8 @@ const ContractsForm = () => {
 
     //Hook
     const [form, setForm] = useState([]);
+
+    const [locality, setLocality] = useState([]);
 
     const [formError, setFormError] = useState({
         nombreError: "",
@@ -36,7 +39,7 @@ const ContractsForm = () => {
 
             bringContractsById(selectedContract?.details._id)
                 .then((contract) => {
-                    console.log(form, "este es el estado de formformform")
+
                     setForm(contract);
                 })
                 .catch((error) => console.error(error));
@@ -45,7 +48,7 @@ const ContractsForm = () => {
 
     const clickedReturn = () => {
         dispatch(cleanContractTable({ details: {} }))
-
+        dispatch(cleanContractForm({ details: {} }))
         navigate("/");
     };
 
@@ -63,10 +66,39 @@ const ContractsForm = () => {
             ...form,
             [e.target.name]: e.target.value,
         })
+
+
     };
 
 
     const dataBase = "http://localhost:3002";
+
+    const bringLocalitiesByCp = async (cp) => {
+        let res = await axios.get(dataBase + "/localities/getlocalidad/" + cp);
+
+        console.log("AQUIESTOYDENTRO", res.data)
+        dispatch(addContractsForm({ details: res.data }))
+        return res.data;
+
+    };
+
+    const selectedLocality = useSelector(contractsFormData);
+    const LocalityFromRdx =   selectedLocality?.details; 
+
+
+
+    const cpinputHandler = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        })
+
+        bringLocalitiesByCp(e.target.value)
+
+
+    };
+
+
 
     const modifyContract = async () => {
         try {
@@ -88,6 +120,7 @@ const ContractsForm = () => {
 
             console.log(resultado, "este es el resultado de modificontrat")
             dispatch(cleanContractTable({ details: {} }))
+            dispatch(cleanContractForm({ details: {} }))
 
             navigate("/");
 
@@ -187,17 +220,19 @@ const ContractsForm = () => {
                         placeholder="Codigo Postal"
                         required
                         value={form.cp}
-                        onChange={inputHandler}
+                        onChange={cpinputHandler}
+
                         onInput={(e) =>
                             errorHandler(e.target.name, e.target.value, "cp")
                         }
                     />
                     <div className="errorInput">{formError.cpError}</div>
                     <input
+                        id="localityinput"
                         type="text"
                         name="localidad"
                         readOnly
-                        value={form.localidad}
+                        value={LocalityFromRdx.municipio_nombre ? LocalityFromRdx.municipio_nombre : "" }
                         className="registerInputs"
                         onChange={inputHandler}
                     />

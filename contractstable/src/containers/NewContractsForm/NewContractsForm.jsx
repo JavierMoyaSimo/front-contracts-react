@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import './NewContractsForm.scss'
 import { useNavigate } from 'react-router-dom';
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // import { contractsTableData, cleanContractTable } from "../ContractsTable/contractsTableSlice";
 import { bringContractsById } from "../../services/apiCalls";
 import axios from "axios";
 import { errorCheck } from "../../services/errorManage";
+import { contractsFormData, addContractsForm, cleanContractForm } from "../ContractsForm/contractsFormSlice";
 
 
 
 const NewContractsForm = () => {
 
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     //Hook
@@ -32,9 +33,32 @@ const NewContractsForm = () => {
     const dataBase = "http://localhost:3002";
 
     const clickedReturn = () => {
-        // dispatch(cleanContractTable({ details: {} }))
+        dispatch(cleanContractForm({ details: {} }))
 
         navigate("/");
+    };
+
+    const bringLocalitiesByCp = async (cp) => {
+        let res = await axios.get(dataBase + "/localities/getlocalidad/" + cp);
+
+        console.log("AQUIESTOYDENTRO", res.data)
+        dispatch(addContractsForm({ details: res.data }))
+        return res.data;
+
+    };
+
+    const selectedLocality = useSelector(contractsFormData);
+    const LocalityFromRdx = selectedLocality?.details;
+
+    const cpinputHandler = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value,
+        })
+
+        bringLocalitiesByCp(e.target.value)
+
+
     };
 
     const newContract = async () => {
@@ -56,7 +80,7 @@ const NewContractsForm = () => {
             )
 
             console.log(resultado, "este es el resultado de newContrat")
-
+            dispatch(cleanContractForm({ details: {} })) 
             navigate("/");
 
         } catch (error) {
@@ -141,7 +165,7 @@ const NewContractsForm = () => {
                         placeholder="Codigo Postal"
                         required
 
-                        onChange={inputHandler}
+                        onChange={cpinputHandler}
                         onInput={(e) =>
                             errorHandler(e.target.name, e.target.value, "cp")
                         }
@@ -150,6 +174,7 @@ const NewContractsForm = () => {
                     <input
                         type="text"
                         name="localidad"
+                        value={LocalityFromRdx.municipio_nombre ? LocalityFromRdx.municipio_nombre : "" }
                         readOnly
                         className="registerInputs"
                         onChange={inputHandler}
