@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const dataBase = "http://localhost:3000";
+const dataBase = "http://localhost:3002";
 
 
 //LISTADO DE TODOS LOS CONTRATOS

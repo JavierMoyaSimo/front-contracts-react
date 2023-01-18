@@ -1,0 +1,67 @@
+.buttons-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+
+
+
+
+
+.new-contract-button {
+    display: flex;
+    border: 1px solid black;
+    width: 5em;
+    margin: 1em;
+    border-radius: 0.5em;
+    padding: 0.2em;
+}
+
+.left-new-contract-button {
+    color: rgb(65, 58, 58);
+    font-weight: bold;
+}
+
+.right-new-contract-button {
+    color: rgb(65, 58, 58);
+    padding-left: 0.2em;
+}
+
+.modify-button {
+    display: flex;
+    background-color: aqua;
+    border: 1px solid black;
+    border-radius: 0.2em;
+    // width: 4em;
+    margin: auto;
+    // height: 1.5em;
+    font-size: small;
+}
+
+.left-modify-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // border: 1px solid black;
+}
+
+.right-modify-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // border: 1px solid rgb(211, 23, 23);
+    font-size: 10px;
+}
+
+.delete-button {
+    display: flex;
+    background-color: aqua;
+    border: 1px solid black;
+    border-radius: 0.2em;
+    // width: 4em;
+    // height: 1.5em;
+    font-size: small;
+    margin: auto;
+}

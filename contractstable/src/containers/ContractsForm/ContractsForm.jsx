@@ -1,8 +1,8 @@
 import React from 'react';
-import './Form.scss'
+import './ContractsForm.scss'
 
 
-const Form = () => {
+const ContractsForm = () => {
     return (
         <div className='formDesign'>
             Soy Form
@@ -10,4 +10,4 @@ const Form = () => {
     )
 }
 
-export default Form;
+export default ContractsForm;

@@ -2,7 +2,8 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Table from "./containers/Table/Table";
+import ContractsTable from "./containers/ContractsTable/ContractsTable";
+import ContractsForm from './containers/ContractsForm/ContractsForm';
 
 
 
@@ -14,7 +15,8 @@ function App() {
 
         <Routes>
 
-          <Route path='/' element={<Table />} />
+          <Route path='/' element={<ContractsTable />} />
+          <Route path='/form' element={<ContractsForm />} />
 
         </Routes>
 
